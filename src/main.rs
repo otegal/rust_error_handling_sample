@@ -1,5 +1,17 @@
-fn main() {
-    println!("Hello");
+use dotenv::dotenv;
+
+// 数種類のエラーを返す場合、Box<dyn std::error::Error>であれば受け付けられる
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    dotenv().ok();
+
+    let test_string = read_string_from_dotenv()?;
+
+    dbg!(test_string);
+    Ok(())
+}
+
+fn read_string_from_dotenv() -> Result<String, std::env::VarError> {
+    std::env::var("TEST_STRING")
 }
 
 #[cfg(test)]
